@@ -1,6 +1,5 @@
 require("dotenv").config()
 const express = require('express');
-const axios = require('axios');
 const fs = require('fs');
 const { api } = require("./gptCall");
 
@@ -17,8 +16,8 @@ app.post('/query', async (req, res) => {
   const { question } = req.body;
 
   api(question).then(rep=>{
-    const csvData = `${question},${rep}\n`;
-    fs.appendFileSync('/app/data/data.csv', csvData);
+    const csvData = `${question} : ${rep}\n`;
+    fs.appendFileSync('./data/data.csv', csvData);
   }).catch(e=>{
     console.log(e)
     res.status(500).json({ error: 'Internal Server Error' });
